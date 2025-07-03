@@ -91,5 +91,12 @@ export class Usuario {
     }
 
 
+    eliminarTokenDevice( token: string ){
+        if(this.tokenDevices?.length == 0) return;
+        
+        this.tokenDevices = this.tokenDevices.filter( tokenDevice => tokenDevice != token)
+    }
+
+
 
 }

@@ -161,10 +161,11 @@ export class UsuariosController {
   // ultimoMensajeLeido(@Payload('usuarioId') id: string) {
   //   return this.usuariosService.ultimoMensajeLeido(id);
   // }
-  // @MessagePattern('usuarios.deleteDevice')
-  // deleteDevice(@Payload() data: any) {
-  //   return this.usuariosService.deleteDevice(data);
-  // }
+
+  @MessagePattern('usuarios.deleteDevice')
+  async deleteDevice(@Payload() data: any) {
+    return await this.usuariosService.deleteDevice(data);
+  }
 
   @MessagePattern('usuarios.actualizar')
   async modificarUsuario(@Payload() payload) {

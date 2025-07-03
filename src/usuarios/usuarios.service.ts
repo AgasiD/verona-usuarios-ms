@@ -13,6 +13,7 @@ import { UsuariosRepository } from './repository/usuarios.repository';
 @Injectable()
 export class UsuariosService {
 
+
   ejecutado: boolean;
 
   constructor(
@@ -147,6 +148,20 @@ export class UsuariosService {
     }
     catch (err) {
       handlerError(err)
+    }
+  }
+
+  async deleteDevice(data: any) {
+    const { usuarioId, tokenDevice } = data;
+    try {
+
+      let usuario = (await this.obtenerUsuario(usuarioId))!;
+      usuario.eliminarTokenDevice(tokenDevice);
+      await this.usuariosRepository.updateUsuario(usuario);
+
+    } catch (err) {
+      handlerError(err)
+
     }
   }
 
@@ -475,7 +490,7 @@ export class UsuariosService {
     try {
       let usuarios = await this.usuariosRepository.findAll()
       if (!this.existeUsuarioId(usuarios, usuarioId)) throw new RpcException({ status: HttpStatus.BAD_REQUEST, message: 'Usuario no existente' })
-      if( usuarios.find( usu => (usu.dni === data_update.dni) && usu.id != usuarioId) ) throw new RpcException({ status: HttpStatus.CONFLICT, message: 'DNI ya registrado' })
+      if (usuarios.find(usu => (usu.dni === data_update.dni) && usu.id != usuarioId)) throw new RpcException({ status: HttpStatus.CONFLICT, message: 'DNI ya registrado' })
       let usuario = (await this.obtenerUsuario(usuarioId))!;
 
       usuario.nombre = data_update.nombre.trim();
