@@ -162,7 +162,7 @@ export class UsuariosController {
   //   return this.usuariosService.ultimoMensajeLeido(id);
   // }
 
-  @MessagePattern('usuarios.deleteDevice')
+  @EventPattern('usuarios.deleteDevice')
   async deleteDevice(@Payload() data: any) {
     return await this.usuariosService.deleteDevice(data);
   }
