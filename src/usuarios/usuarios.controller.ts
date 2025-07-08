@@ -118,7 +118,7 @@ export class UsuariosController {
     // return (await this.usuariosService.crearUsuario(dto)); TODO
   }
 
-  @MessagePattern('usuarios.tokenDevice')
+  @EventPattern('usuarios.tokenDevice')
   async registrarDispositivo(@Payload() body: any) {
     return (await this.usuariosService.registrarDispositivo(body));
   }

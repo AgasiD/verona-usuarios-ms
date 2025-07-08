@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { HttpService } from "src/common/services/http/http.service";
 import { Usuario } from "../entities/usuario.entity";
 import { encriptarPassword, getDataFromJSON, handlerError } from "src/common/helpers/helper";
@@ -43,7 +43,10 @@ export class UsuariosRepository {
 
     async updateUsuario(usuario: Usuario) {
 
-        if (usuario.id === null || usuario.id === undefined || usuario.id === '') throw new RpcException({ status: HttpStatus.BAD_REQUEST, message: 'Id vacío' });
+        if (usuario.id === null || usuario.id === undefined || usuario.id === '') {
+            console.log(usuario)
+            throw new RpcException({ status: HttpStatus.BAD_REQUEST, message: 'Id vacío' });
+        }
         await this.cargarUsuarios();
         let userResponse = await this.http.patch(`${this.uri}/${usuario.id}.json`, {}, usuario); //?auth=${token} FORDEPLOY
         if (userResponse.status >= 300) throw new RpcException({ status: userResponse.status, message: userResponse.statusText })
