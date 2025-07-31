@@ -47,7 +47,7 @@ export class UsuariosRepository {
             console.log(usuario)
             throw new RpcException({ status: HttpStatus.BAD_REQUEST, message: 'Id vacío' });
         }
-        await this.cargarUsuarios();
+        this.usuarios = await this.findAll();
         let userResponse = await this.http.patch(`${this.uri}/${usuario.id}.json`, {}, usuario); //?auth=${token} FORDEPLOY
         if (userResponse.status >= 300) throw new RpcException({ status: userResponse.status, message: userResponse.statusText })
         let index = this.usuarios.findIndex(user => user.id == usuario.id);
